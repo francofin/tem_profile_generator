@@ -6,7 +6,7 @@ const path = require("path");
 const fs = require("fs");
 
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
+const OUTPUT_DIR = path.resolve(__dirname, "dist");
 const OutputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./src/page-template.js");
@@ -60,7 +60,7 @@ function AppMenu() {
             {
                 type: "input",
                 name: 'managerOfficeNumber',
-                message: "What is the Manager's Email",
+                message: "What is the Manager's Office Number",
                 validate: answer => {
                     const pass = answer.match(
                         /^[1-9]\d*$/
@@ -97,8 +97,8 @@ function AppMenu() {
                 addEngineer();
                 break;
                 case "Intern":
-                    addIntern();
-                    break;
+                addIntern();
+                break;
                 default:
                 buildTeam();
             }
@@ -158,7 +158,7 @@ function AppMenu() {
                 }
             },
         ]).then(answers => {
-            const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.enginnerEmail, answers.engineerGithub);
+            const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGithub);
             teamMembers.push(engineer);
             idArray.push(answers.engineerId);
             createTeam();
@@ -187,7 +187,12 @@ function AppMenu() {
                         /^[1-9]\d*$/
                     );
                     if (pass) {
-                        return true;
+                        if(idArray.includes(answer)) {
+                            return "This ID is already taken";
+                        }
+                        else{
+                            return true;
+                        }
                     }
                     return "Please enter a Positive number greater than zero";
                 }
@@ -218,7 +223,7 @@ function AppMenu() {
                 }
             },
         ]).then(answers => {
-            const engineer = new Engineer(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
+            const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool);
             teamMembers.push(intern);
             idArray.push(answers.internId);
             createTeam();
