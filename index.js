@@ -97,8 +97,8 @@ function AppMenu() {
                 addEngineer();
                 break;
                 case "Intern":
-                addIntern();
-                break;
+                    addIntern();
+                    break;
                 default:
                 buildTeam();
             }
